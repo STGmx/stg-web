@@ -20,21 +20,61 @@ const GLYPHS: Record<ServiceSlug, typeof IconSnowflake> = {
   "personal-en-sitio": IconTeam,
 };
 
+/* logo compacto en plata con crossfade a color (requiere ancestro .group) */
+function BrandLogo({
+  logo,
+  name,
+  emblem,
+}: {
+  logo: string;
+  name: string;
+  emblem: boolean;
+}) {
+  const size = emblem ? "max-h-8" : "max-h-[1.15rem]";
+  return (
+    <span className="group/logo relative inline-flex items-center">
+      <Image
+        src={logo}
+        alt={`Logotipo de ${name}`}
+        width={160}
+        height={40}
+        className={`${size} w-auto max-w-[6.5rem] opacity-80 transition-opacity duration-300 group-hover/logo:opacity-0`}
+      />
+      <Image
+        src={logo.replace(/\.png$/, "-color.png")}
+        alt=""
+        width={160}
+        height={40}
+        className="absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-300 group-hover/logo:opacity-100"
+      />
+    </span>
+  );
+}
+
 function BrandRun({ slug }: { slug: ServiceSlug }) {
   const group = BRAND_GROUPS.find((g) => g.serviceSlug === slug);
   if (!group) return null;
   return (
-    <div className="mt-8 flex flex-col gap-3">
-      <span className="rotulo !text-silver-3">Tecnología soportada</span>
-      <div className="flex flex-wrap gap-2">
-        {group.brands.map((brand) => (
-          <span
-            key={brand.slug}
-            className="border border-line bg-navy-3 px-2.5 py-1 text-[0.75rem] font-medium tracking-wide text-silver-2"
-          >
-            {brand.name}
-          </span>
-        ))}
+    <div className="mt-8 flex flex-col gap-4">
+      <span className="rotulo !text-silver-3">Servicio multimarca</span>
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-3.5">
+        {group.brands.map((brand) =>
+          brand.logo ? (
+            <BrandLogo
+              key={brand.slug}
+              logo={brand.logo}
+              name={brand.name}
+              emblem={brand.shape === "emblem"}
+            />
+          ) : (
+            <span
+              key={brand.slug}
+              className="text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-silver-2"
+            >
+              {brand.name}
+            </span>
+          ),
+        )}
       </div>
     </div>
   );
@@ -52,7 +92,7 @@ export default function Services() {
       <div className="wrap relative z-10">
         <SectionHead
           title="Nuestros Servicios"
-          lead="Soluciones integrales de mantenimiento preventivo, correctivo y de emergencia. Garantizamos continuidad operativa con altos estándares técnicos."
+          lead="Mantenimiento correctivo, preventivo y de emergencia bajo estándares técnicos estrictos, garantizando eficiencia y continuidad operativa."
         />
 
         {/* Retícula Industrial para Servicios Estándar */}
@@ -108,7 +148,7 @@ export default function Services() {
                         rel="noopener noreferrer"
                         className="link-quiet text-sm uppercase tracking-[0.15em]"
                       >
-                        Cotizar Especialidad
+                        Cotizar esta línea
                       </a>
                     </div>
                   </div>
@@ -129,16 +169,18 @@ export default function Services() {
               <div className="relative w-full lg:w-1/2 aspect-[16/9] lg:aspect-auto border-b lg:border-b-0 lg:border-r border-line overflow-hidden bg-navy">
                 {specialService.image && (
                   <>
-                    <div className="absolute inset-0 opacity-40 grayscale mix-blend-luminosity transition-all duration-700 group-hover:scale-105 group-hover:opacity-60">
+                    <div className="absolute inset-0 opacity-30 grayscale mix-blend-luminosity transition-all duration-700 group-hover:scale-105 group-hover:opacity-45">
                       <Image
                         src={specialService.image}
                         alt={specialService.imageAlt}
                         fill
-                        className="object-cover"
+                        className="-scale-x-100 object-cover"
                         sizes="(max-width: 1024px) 100vw, 50vw"
                       />
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-navy-3 via-navy-3/80 to-transparent pointer-events-none" />
+                    {/* entierra la señalética IA del render (SECTION B4 / CAUTION) */}
+                    <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-navy-3/95 via-navy-3/60 to-transparent pointer-events-none" />
                   </>
                 )}
                 <div className="absolute bottom-8 left-8 lg:top-12 lg:left-12 lg:bottom-auto">
