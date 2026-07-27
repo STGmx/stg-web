@@ -1,105 +1,197 @@
+import Image from "next/image";
 import type { CSSProperties } from "react";
+import { WA_DEFAULT } from "@/lib/site";
+import { SERVICES, type ServiceSlug } from "@/lib/services";
+import { CLIENTS } from "@/lib/brands";
+import {
+  IconSnowflake,
+  IconBolt,
+  IconPower,
+  IconGear,
+  IconTeam,
+  IconWhatsApp,
+} from "./icons";
 
-/**
- * Plano de ingeniería de un engrane (eco del logo): líneas de centro
- * punto-raya, círculo de paso discontinuo, barreno de tornillos y cuñero.
- * El engrane gira una vuelta cada 4 minutos; las líneas de centro,
- * como en un plano real, no giran.
- */
-function GearDrawing({ className }: { className: string }) {
-  const teeth = 28;
-  const bolts = 8;
-  return (
-    <svg
-      viewBox="-400 -400 800 800"
-      className={className}
-      aria-hidden="true"
-      fill="none"
-    >
-      {/* líneas de centro (anotación de plano: estáticas) */}
-      <g className="stroke-line" strokeWidth="1" opacity="0.55">
-        <path d="M-396 0H396" strokeDasharray="30 10 5 10" />
-        <path d="M0 -396V396" strokeDasharray="30 10 5 10" />
-      </g>
+const GLYPHS: Record<ServiceSlug, typeof IconSnowflake> = {
+  "cocina-refrigeracion": IconSnowflake,
+  "trabajos-electricos": IconBolt,
+  generadores: IconPower,
+  "sistemas-mecanicos": IconGear,
+  "personal-en-sitio": IconTeam,
+};
 
-      <g className="gear-spin stroke-line" strokeWidth="1.3">
-        {/* dientes */}
-        {Array.from({ length: teeth }, (_, i) => (
-          <rect
-            key={i}
-            x="-16"
-            y="-332"
-            width="32"
-            height="32"
-            rx="4"
-            transform={`rotate(${(i * 360) / teeth})`}
-          />
-        ))}
-        {/* cuerpo */}
-        <circle r="302" />
-        <circle r="220" />
-        {/* círculo de paso (convención de plano, en discontinua) */}
-        <circle r="317" strokeDasharray="7 9" className="stroke-accent" opacity="0.45" />
-        {/* círculo de barrenos */}
-        <circle r="260" strokeDasharray="22 8 4 8" opacity="0.5" />
-        {Array.from({ length: bolts }, (_, i) => (
-          <circle
-            key={i}
-            cy="-260"
-            r="17"
-            transform={`rotate(${(i * 360) / bolts})`}
-          />
-        ))}
-        {/* masa y cuñero */}
-        <circle r="96" />
-        <path d="M-13 -96h26v-19h-26z" />
-      </g>
-    </svg>
-  );
-}
+/* altura de exhibición por logo */
+const CLIENT_LOGO_H: Record<string, string> = {
+  zoetry: "h-10",
+  toks: "h-8",
+  palladium: "h-5",
+  carso: "h-6",
+  "mercado-libre": "h-7",
+};
 
 export default function Hero() {
   return (
     <section
       id="inicio"
-      className="relative flex min-h-svh items-center overflow-hidden pb-24 pt-28"
+      className="relative flex min-h-svh flex-col overflow-hidden bg-navy pt-28"
     >
-      <div className="absolute inset-0" aria-hidden="true">
-        <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_18%_8%,#0e1726_0%,#0a0f18_55%)]" />
-        <GearDrawing className="absolute -right-44 top-1/2 hidden h-[54rem] w-[54rem] -translate-y-1/2 opacity-90 md:block" />
-        <GearDrawing className="absolute -right-40 -top-32 h-[26rem] w-[26rem] opacity-60 md:hidden" />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-navy" />
+      {/* fondo técnico: grid, luces desenfocadas */}
+      <div className="absolute inset-0 grid-paper pointer-events-none opacity-[0.35]" aria-hidden="true" />
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-stg-blue/15 blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" aria-hidden="true" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent/10 blur-[100px] rounded-full pointer-events-none -translate-x-1/3 translate-y-1/3" aria-hidden="true" />
+
+      <div className="wrap relative z-10 flex flex-1 flex-col justify-center py-12">
+        <div className="grid w-full items-center gap-12 lg:grid-cols-12">
+
+          {/* — texto aprobado + CTAs (8 columnas) — */}
+          <div className="lg:col-span-8 flex flex-col">
+
+            <h1 className="font-serif text-[3.2rem] font-bold leading-[1.05] tracking-tight text-white sm:text-[4.2rem] lg:text-[5.2rem]">
+              <span className="line-mask block">
+                <span style={{ "--line-delay": "200ms" } as CSSProperties}>
+                  Especialistas en
+                </span>
+              </span>
+              <span className="line-mask block mt-1">
+                <span
+                  className="font-semibold italic text-accent"
+                  style={{ "--line-delay": "350ms" } as CSSProperties}
+                >
+                  mantenimiento crítico
+                </span>
+              </span>
+              <span className="line-mask block mt-1">
+                <span style={{ "--line-delay": "500ms" } as CSSProperties}>
+                  y generación.
+                </span>
+              </span>
+            </h1>
+
+            <p
+              className="rise mt-8 max-w-xl text-lg leading-relaxed text-silver-2 sm:text-xl"
+              style={{ "--rise-delay": "650ms" } as CSSProperties}
+            >
+              Brindamos soluciones integrales, rápidas y efectivas para que
+              las operaciones de tu empresa nunca se detengan.
+            </p>
+
+            <div
+              className="rise mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
+              style={{ "--rise-delay": "800ms" } as CSSProperties}
+            >
+              <a href="#contacto" className="btn-primary">
+                Solicitar cotización
+              </a>
+              <a
+                href={WA_DEFAULT}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+              >
+                <IconWhatsApp className="mr-2 h-5 w-5 text-[#25d366]" />
+                Atención inmediata
+              </a>
+            </div>
+          </div>
+
+          {/* — Bento box abstracto (4 columnas) — */}
+          <div
+            className="rise hidden lg:grid lg:col-span-4 grid-cols-2 grid-rows-2 gap-4 h-full max-h-[360px]"
+            style={{ "--rise-delay": "700ms" } as CSSProperties}
+          >
+            <div className="card card-hover flex flex-col justify-between p-6">
+              <IconGear className="h-8 w-8 text-accent gear-spin" />
+              <div className="mt-6">
+                <span className="block text-3xl font-bold text-white mb-1">24/7</span>
+                <span className="rotulo">Disponibilidad</span>
+              </div>
+            </div>
+
+            <div className="card card-hover flex flex-col justify-between p-6">
+              <IconBolt className="h-8 w-8 text-accent" />
+              <div className="mt-6">
+                <span className="block text-3xl font-bold text-white mb-1">100%</span>
+                <span className="rotulo">Efectividad</span>
+              </div>
+            </div>
+
+            <div className="card group relative col-span-2 overflow-hidden p-6 flex flex-col justify-end min-h-[140px]">
+              <div className="absolute inset-0 bg-[url('/services/mecanicos.png')] bg-cover bg-center opacity-30 mix-blend-luminosity transition-transform duration-700 group-hover:scale-105"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-2 via-navy-2/60 to-transparent"></div>
+
+              <div className="relative z-10 flex items-end justify-between">
+                <div>
+                  <span className="block text-xl font-bold text-white mb-1">Personal Técnico</span>
+                  <span className="rotulo">Altamente calificado</span>
+                </div>
+                <IconTeam className="h-7 w-7 text-accent" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="wrap relative">
-        <h1 className="font-serif text-[2.7rem] font-bold leading-[1.07] tracking-tight text-white sm:text-[4rem] lg:text-[5.25rem] xl:text-[6rem]">
-          <span className="line-mask">
-            <span style={{ "--line-delay": "120ms" } as CSSProperties}>
-              Especialistas en
-            </span>
-          </span>
-          <span className="line-mask">
-            <span
-              className="font-semibold italic text-accent"
-              style={{ "--line-delay": "280ms" } as CSSProperties}
-            >
-              mantenimiento crítico
-            </span>
-          </span>
-          <span className="line-mask">
-            <span style={{ "--line-delay": "440ms" } as CSSProperties}>
-              y generación.
-            </span>
-          </span>
-        </h1>
+      {/* — Grid industrial de servicios — */}
+      <div
+        className="rise relative z-10 mt-12 bg-navy-3/40 backdrop-blur-sm border-t border-line"
+        style={{ "--rise-delay": "950ms" } as CSSProperties}
+      >
+        <div className="wrap px-0">
+          <div className="grid grid-cols-2 lg:grid-cols-5 divide-x divide-y lg:divide-y-0 divide-line border-x border-line">
+            {SERVICES.map((service, i) => {
+              const Glyph = GLYPHS[service.slug];
+              return (
+                <a
+                  key={service.slug}
+                  href={`#${service.slug}`}
+                  className="group relative flex flex-col p-6 transition-colors duration-300 hover:bg-white/[0.03] overflow-hidden"
+                >
+                  <div className="mb-8 flex items-start justify-between">
+                    <span className="text-accent/60 transition-colors group-hover:text-accent">
+                      <Glyph className="h-7 w-7" />
+                    </span>
+                    <span className="dato text-xs text-silver-3 transition-colors group-hover:text-silver">
+                      0{i + 1}
+                    </span>
+                  </div>
+                  <h3 className="font-semibold text-silver transition-colors group-hover:text-white pr-4">
+                    {service.title}
+                  </h3>
 
-        <p
-          className="rise mt-10 max-w-xl border-l-2 border-accent/70 pl-6 text-lg leading-relaxed text-silver-2 sm:text-xl lg:ml-[34%]"
-          style={{ "--rise-delay": "760ms" } as CSSProperties}
-        >
-          Brindamos soluciones integrales, rápidas y efectivas para que las
-          operaciones de tu empresa nunca se detengan.
-        </p>
+                  {/* Flecha revelable */}
+                  <span className="absolute bottom-6 right-6 -translate-x-4 text-accent opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                    →
+                  </span>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* — Prueba social: clientes reales — */}
+      <div
+        className="rise relative z-10 border-t border-line bg-navy/90 backdrop-blur-md"
+        style={{ "--rise-delay": "1100ms" } as CSSProperties}
+      >
+        <div className="wrap flex flex-col md:flex-row items-center gap-x-12 gap-y-6 py-6 lg:py-8">
+          <span className="rotulo shrink-0">Confían en nosotros</span>
+          <div className="flex flex-1 flex-wrap items-center justify-center md:justify-start gap-8 lg:gap-14">
+            {CLIENTS.map((client) =>
+              client.logo ? (
+                <Image
+                  key={client.slug}
+                  src={client.logo}
+                  alt={`Logotipo de ${client.name}`}
+                  width={240}
+                  height={60}
+                  className={`${CLIENT_LOGO_H[client.slug] ?? "h-6"
+                    } w-auto object-contain opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500`}
+                />
+              ) : null,
+            )}
+          </div>
+        </div>
       </div>
     </section>
   );

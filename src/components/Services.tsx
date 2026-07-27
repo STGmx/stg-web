@@ -10,7 +10,6 @@ import {
   IconPower,
   IconGear,
   IconTeam,
-  IconWhatsApp,
 } from "./icons";
 
 const GLYPHS: Record<ServiceSlug, typeof IconSnowflake> = {
@@ -25,21 +24,18 @@ function BrandRun({ slug }: { slug: ServiceSlug }) {
   const group = BRAND_GROUPS.find((g) => g.serviceSlug === slug);
   if (!group) return null;
   return (
-    <div className="mt-6 border-t border-line-2 pt-5">
-      <p className="rotulo mb-2.5">Servicio multimarca</p>
-      <p className="text-[0.95rem] leading-relaxed text-silver-2">
-        {group.brands.map((brand, i) => (
-          <span key={brand.slug}>
-            <span className="whitespace-nowrap">
-              {brand.name}
-              {i < group.brands.length - 1 && (
-                <span className="text-silver-3"> · </span>
-              )}
-            </span>
-            <wbr />
+    <div className="mt-8 flex flex-col gap-3">
+      <span className="rotulo !text-silver-3">Tecnología soportada</span>
+      <div className="flex flex-wrap gap-2">
+        {group.brands.map((brand) => (
+          <span
+            key={brand.slug}
+            className="border border-line bg-navy-3 px-2.5 py-1 text-[0.75rem] font-medium tracking-wide text-silver-2"
+          >
+            {brand.name}
           </span>
         ))}
-      </p>
+      </div>
     </div>
   );
 }
@@ -49,125 +45,134 @@ export default function Services() {
   const specialService = SERVICES.find((s) => s.slug === "personal-en-sitio");
 
   return (
-    <section id="servicios" className="wrap py-24 sm:py-32">
-      <SectionHead
-        title="Nuestros Servicios"
-        lead="Soluciones integrales de mantenimiento preventivo, correctivo y de emergencia. Garantizamos continuidad operativa con altos estándares técnicos."
-      />
+    <section id="servicios" className="relative py-24 sm:py-32 bg-navy">
+      {/* Patrón técnico de fondo */}
+      <div className="absolute inset-0 grid-paper pointer-events-none opacity-[0.15]" aria-hidden="true" />
+      
+      <div className="wrap relative z-10">
+        <SectionHead
+          title="Nuestros Servicios"
+          lead="Soluciones integrales de mantenimiento preventivo, correctivo y de emergencia. Garantizamos continuidad operativa con altos estándares técnicos."
+        />
 
-      {/* 3-Column Grid for Standard Services */}
-      <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {standardServices.map((service, index) => {
-          const Glyph = GLYPHS[service.slug];
-          
-          return (
-            <Reveal key={service.slug} delay={index * 100} className="h-full">
-              <article
-                id={service.slug}
-                className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line-2 bg-[#0a0f18] transition-all duration-300 hover:border-line hover:shadow-2xl hover:shadow-accent/5"
-              >
-                {/* Image Header */}
-                <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-line-2 bg-navy">
+        {/* Retícula Industrial para Servicios Estándar */}
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 border-t border-l border-line bg-navy-2/20 backdrop-blur-sm">
+          {standardServices.map((service, index) => {
+            const Glyph = GLYPHS[service.slug];
+            return (
+              <Reveal key={service.slug} delay={index * 100} className="relative group">
+                <article
+                  id={service.slug}
+                  className="relative flex flex-col h-full min-h-[440px] border-b border-r border-line p-8 sm:p-12 overflow-hidden transition-colors duration-500 hover:bg-navy-2/60"
+                >
+                  {/* Imagen de fondo técnica */}
                   {service.image && (
-                    <Image
-                      src={service.image}
-                      alt={service.imageAlt}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
+                    <>
+                      <div className="absolute inset-0 opacity-[0.07] grayscale mix-blend-luminosity transition-all duration-700 group-hover:opacity-[0.15] group-hover:scale-105">
+                        <Image
+                          src={service.image}
+                          alt={service.imageAlt}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                        />
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/80 to-transparent pointer-events-none" />
+                    </>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f18] via-transparent to-transparent opacity-80" />
-                  
-                  <div className="absolute bottom-4 left-4 flex h-12 w-12 items-center justify-center rounded-xl border border-line bg-[#131b2c]/80 backdrop-blur-md text-accent shadow-sm">
-                    <Glyph className="h-6 w-6" />
+
+                  <div className="relative z-10 flex flex-col flex-1">
+                    <div className="flex items-start justify-between mb-12">
+                      <div className="flex h-12 w-12 items-center justify-center border border-line bg-navy-3 text-accent shadow-sm">
+                        <Glyph className="h-6 w-6" />
+                      </div>
+                      <span className="dato text-sm text-silver-3 bg-navy-3/50 px-2.5 py-1 border border-line">
+                        {service.folio}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-auto font-serif text-3xl font-bold tracking-tight text-white">
+                      {service.title}
+                    </h3>
+                    
+                    <p className="mt-4 text-silver-2 leading-relaxed max-w-md">
+                      {service.description}
+                    </p>
+
+                    <BrandRun slug={service.slug} />
+
+                    <div className="mt-10 pt-6 border-t border-line-2">
+                      <a
+                        href={waLink(service.waMessage)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link-quiet text-sm uppercase tracking-[0.15em]"
+                      >
+                        Cotizar Especialidad
+                      </a>
+                    </div>
                   </div>
-                  <span className="absolute bottom-4 right-4 dato text-[0.85rem] text-silver-3 bg-[#0a0f18]/80 px-2 py-1 rounded backdrop-blur-md">
-                    {service.folio}
-                  </span>
-                </div>
+                </article>
+              </Reveal>
+            );
+          })}
+        </div>
 
-                {/* Content */}
-                <div className="flex flex-1 flex-col p-6 sm:p-8">
-                  <h3 className="font-serif text-2xl font-semibold tracking-tight text-white">
-                    {service.title}
-                  </h3>
-                  
-                  <p className="mt-3 flex-1 text-[1.05rem] leading-relaxed text-silver-2">
-                    {service.description}
-                  </p>
-
-                  <BrandRun slug={service.slug} />
-
-                  <div className="mt-8">
-                    <a
-                      href={waLink(service.waMessage)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-line-2 bg-white/5 py-3 text-[0.95rem] font-semibold text-silver transition-all hover:bg-accent hover:text-navy hover:border-accent"
-                    >
-                      <IconWhatsApp className="h-5 w-5" />
-                      Cotizar servicio
-                    </a>
-                  </div>
-                </div>
-              </article>
-            </Reveal>
-          );
-        })}
-      </div>
-
-      {/* Special Full-Width Card for Personal en Sitio */}
-      {specialService && (
-        <Reveal delay={400} className="mt-8">
-          <article
-            id={specialService.slug}
-            className="group overflow-hidden rounded-2xl border border-line-2 bg-[#0a0f18] transition-all duration-300 hover:border-line hover:shadow-2xl hover:shadow-accent/5"
-          >
-            <div className="flex flex-col lg:flex-row">
-              {/* Image Side */}
-              <div className="relative aspect-[16/9] w-full lg:aspect-auto lg:w-2/5 border-b lg:border-b-0 lg:border-r border-line-2 bg-navy overflow-hidden">
+        {/* Panel Especial Full-Width */}
+        {specialService && (
+          <Reveal delay={200} className="relative z-10">
+            <article
+              id={specialService.slug}
+              className="group relative flex flex-col lg:flex-row border-b border-l border-r border-line bg-navy-3 overflow-hidden"
+            >
+              {/* Mitad Imagen */}
+              <div className="relative w-full lg:w-1/2 aspect-[16/9] lg:aspect-auto border-b lg:border-b-0 lg:border-r border-line overflow-hidden bg-navy">
                 {specialService.image && (
-                  <Image
-                    src={specialService.image}
-                    alt={specialService.imageAlt}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                  />
+                  <>
+                    <div className="absolute inset-0 opacity-40 grayscale mix-blend-luminosity transition-all duration-700 group-hover:scale-105 group-hover:opacity-60">
+                      <Image
+                        src={specialService.image}
+                        alt={specialService.imageAlt}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-navy-3 via-navy-3/80 to-transparent pointer-events-none" />
+                  </>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-[#0a0f18] via-[#0a0f18]/50 to-transparent opacity-90 lg:opacity-100" />
-                
-                <div className="absolute bottom-6 left-6 lg:top-8 lg:bottom-auto flex h-14 w-14 items-center justify-center rounded-xl border border-line bg-[#131b2c]/80 backdrop-blur-md text-accent shadow-sm">
-                  <IconTeam className="h-7 w-7" />
+                <div className="absolute bottom-8 left-8 lg:top-12 lg:left-12 lg:bottom-auto">
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-14 w-14 items-center justify-center border border-line bg-navy-2 text-accent shadow-sm">
+                      <IconTeam className="h-7 w-7" />
+                    </div>
+                    <span className="dato text-sm text-silver-3 bg-navy-2 px-2.5 py-1 border border-line">
+                      {specialService.folio}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Content Side */}
-              <div className="flex w-full flex-col p-6 sm:p-10 lg:w-3/5">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-serif text-3xl font-semibold tracking-tight text-white">
-                    {specialService.title}
-                  </h3>
-                  <span className="dato text-[0.85rem] text-silver-3">
-                    {specialService.folio}
-                  </span>
-                </div>
+              {/* Mitad Contenido */}
+              <div className="relative w-full lg:w-1/2 flex flex-col p-8 sm:p-12 lg:p-16">
+                <h3 className="font-serif text-[2.5rem] font-bold tracking-tight text-white leading-tight">
+                  {specialService.title}
+                </h3>
                 
-                <p className="mt-4 text-lg leading-relaxed text-silver-2">
+                <p className="mt-5 text-lg leading-relaxed text-silver-2">
                   {specialService.description}
                 </p>
 
-                {/* Modalidades */}
+                {/* Modalidades como especificaciones técnicas */}
                 {specialService.modalidades && (
-                  <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                  <div className="mt-10 grid gap-6 sm:grid-cols-2">
                     {specialService.modalidades.map((m) => (
                       <div
                         key={m.title}
-                        className="rounded-xl border border-white/5 bg-white/5 p-5"
+                        className="border-l-[3px] border-accent/40 pl-5 py-1"
                       >
-                        <h4 className="font-semibold text-silver">{m.title}</h4>
-                        <p className="mt-2 text-[0.95rem] leading-relaxed text-silver-2">
+                        <h4 className="font-semibold text-silver tracking-wide">{m.title}</h4>
+                        <p className="mt-2 text-[0.95rem] leading-relaxed text-silver-3">
                           {m.description}
                         </p>
                       </div>
@@ -175,22 +180,21 @@ export default function Services() {
                   </div>
                 )}
 
-                <div className="mt-10 lg:mt-auto lg:pt-8">
+                <div className="mt-12 pt-8 border-t border-line-2 lg:mt-auto lg:pt-10">
                   <a
                     href={waLink(specialService.waMessage)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-8 py-3.5 text-[1rem] font-bold text-navy transition-all hover:bg-accent-light hover:scale-[1.02]"
+                    className="btn-primary inline-flex"
                   >
-                    <IconWhatsApp className="h-5 w-5" />
                     Cotizar Personal en Sitio
                   </a>
                 </div>
               </div>
-            </div>
-          </article>
-        </Reveal>
-      )}
+            </article>
+          </Reveal>
+        )}
+      </div>
     </section>
   );
 }
