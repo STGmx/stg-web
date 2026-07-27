@@ -1,0 +1,37 @@
+[
+  {
+    "slug": "client-toks",
+    "found": true,
+    "file": "client-toks.png",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Toks%20logo.png?width=640",
+    "notas": "logo claro/solido (letras crema 'TOKS RESTAURANTE') sobre fondo NEGRO opaco; el PNG original de Commons es 288x175, no hay version mayor ni con transparencia"
+  },
+  {
+    "slug": "client-palladium",
+    "found": true,
+    "file": "client-palladium.png",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Palladium%20Hotel%20Group.svg?width=640",
+    "notas": "logo oscuro sobre claro (dorado/ocre), fondo transparente"
+  },
+  {
+    "slug": "client-mercado-libre",
+    "found": true,
+    "file": "client-mercado-libre.png",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Mercado%20Libre%20wordmark%20(Spanish%20version).svg?width=640",
+    "notas": "logo oscuro sobre claro (wordmark azul marino, dos lineas), fondo transparente"
+  },
+  {
+    "slug": "client-zoetry",
+    "found": true,
+    "file": "client-zoetry.png",
+    "source_url": "https://logowik.com/content/uploads/images/zoetry-welness-spa-resorts8103.jpg",
+    "notas": "tinta oscura sobre claro (wordmark dorado 'ZOETRY' con sol multicolor y 'WELLNESS & SPA RESORTS' en malva), fondo BLANCO opaco (preview JPG de logowik.com convertido a PNG, descarga directa sin login); los sitios oficiales zoetryresorts.com / hyattinclusivecollection.com / amrcollection.com bloquean el acceso (403) y no existe en Commons/Wikipedia"
+  },
+  {
+    "slug": "client-carso",
+    "found": true,
+    "file": "client-carso.png",
+    "source_url": "https://www.ccicsa.com.mx/wp-content/uploads/2026/03/Catalogo-Operadora-CICSA.pdf",
+    "notas": "tinta oscura sobre claro ('OPERADORA' naranja sobre 'CICSA' gris), fondo BLANCO opaco; recortado de la portada del catalogo oficial en ccicsa.com.mx (sitio oficial de Carso Infraestructura y Construccion) renderizada a 300dpi; es la marca 'Operadora CICSA' (la principal filial operativa), el logo del header del sitio era solo 'carso' naranja a 150px"
+  }
+]

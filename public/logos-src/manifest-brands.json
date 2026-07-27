@@ -1,0 +1,93 @@
+[
+  {
+    "slug": "brand-cummins",
+    "found": true,
+    "file": "brand-cummins.png",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Cummins_logo.svg?width=640",
+    "notas": "logo oscuro sobre claro (negro solido), fondo transparente"
+  },
+  {
+    "slug": "brand-john-deere",
+    "found": true,
+    "file": "brand-john-deere.png",
+    "source_url": "https://en.wikipedia.org/wiki/File:John_Deere_Logo_%E2%80%93_Flat_2_Color.svg",
+    "notas": "logo oscuro sobre claro (verde y amarillo, version apilada con ciervo), fondo transparente; archivo no-libre alojado en en.wikipedia"
+  },
+  {
+    "slug": "brand-cat",
+    "found": true,
+    "file": "brand-cat.png",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Caterpillar_logo.svg?width=640",
+    "notas": "logo oscuro sobre claro (negro con triangulo amarillo), fondo transparente"
+  },
+  {
+    "slug": "brand-volvo-penta",
+    "found": true,
+    "file": "brand-volvo-penta.png",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Volvo_Penta_wordmark.svg?width=640",
+    "notas": "logo oscuro sobre claro (wordmark negro, solo texto), fondo transparente; muy apaisado (960x34)"
+  },
+  {
+    "slug": "brand-perkins",
+    "found": true,
+    "file": "brand-perkins.png",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Perkins-Logo.svg?width=640",
+    "notas": "logo oscuro sobre claro (azul corporativo), fondo transparente"
+  },
+  {
+    "slug": "brand-rational",
+    "found": true,
+    "file": "brand-rational.png",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Rational_AG_201x_logo.svg?width=640",
+    "notas": "logo oscuro sobre claro (rojo y azul con marco), fondo transparente"
+  },
+  {
+    "slug": "brand-hobart",
+    "found": true,
+    "file": "brand-hobart.png",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Hobart_logo.svg?width=640",
+    "notas": "logo oscuro sobre claro (negro solido, Hobart Corporation foodservice), fondo transparente"
+  },
+  {
+    "slug": "brand-fagor",
+    "found": true,
+    "file": "brand-fagor.png",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:FilePath/LOGO_FAGOR.jpg?width=640",
+    "notas": "logo oscuro sobre claro (negro con circulo rojo), fondo BLANCO opaco (origen JPG convertido a PNG)"
+  },
+  {
+    "slug": "brand-manitowoc",
+    "found": true,
+    "file": "brand-manitowoc.png",
+    "source_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Logo_Manitowoc.svg?width=640",
+    "notas": "logo oscuro sobre claro (negro con circulo rojo), fondo transparente; es el logo de The Manitowoc Company (gruas), no se encontro el de Manitowoc Ice"
+  },
+  {
+    "slug": "brand-josper",
+    "found": true,
+    "file": "brand-josper.png",
+    "source_url": "https://jospergrill.com/wp-content/uploads/2019/05/escudo-josper.png",
+    "notas": "logo solido a color (escudo negro/bronce 'Josper desde 1969'), funciona sobre claro, fondo transparente; del sitio oficial jospergrill.com (no existe en Commons/Wikipedia); el wordmark solo existia en blanco"
+  },
+  {
+    "slug": "brand-sammic",
+    "found": true,
+    "file": "brand-sammic.png",
+    "source_url": "https://www.sammic.com/assets/logo-sammic-115px@2x.png",
+    "notas": "logo solido oscuro (circulo negro con S roja y texto blanco), funciona sobre claro, fondo transparente; del sitio oficial sammic.com (no existe en Commons/Wikipedia); 228px, el mayor disponible"
+  },
+  {
+    "slug": "brand-robot-coupe",
+    "found": true,
+    "file": "brand-robot-coupe.png",
+    "source_url": "https://www.robot-coupe.com/bundles/rbc/build/static/images/icons/logo-header.svg",
+    "notas": "logo oscuro sobre claro (gris #707070), fondo BLANCO opaco (SVG oficial rasterizado con qlmanage); del sitio oficial robot-coupe.com (no existe en Commons/Wikipedia)"
+  },
+  {
+    "slug": "brand-zummex",
+    "found": true,
+    "file": "brand-zummex.png",
+    "source_url": "https://www.zumex.com/img/web/logo/logo-zumex.svg",
+    "notas": "logo oscuro sobre claro (gris oscuro #353535, marca real 'Zumex' aunque el brochure dice 'Zummex'), fondo BLANCO opaco (SVG oficial rasterizado con qlmanage); del sitio oficial zumex.com (no existe en Commons/Wikipedia)"
+  }
+]
