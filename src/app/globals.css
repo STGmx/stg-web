@@ -16,6 +16,7 @@
   --color-silver-2: #94a6bc;
   --color-silver-3: #62778f;
   --color-accent: #74a7d8;
+  --color-accent-2: #94bee8;
   --color-stg-blue: #095fa5;
   --color-plate: #f2f6fa;
   --color-wa: #22c065;
@@ -160,6 +161,41 @@ body {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+}
+
+/* ——— hero: revelado de línea enmascarada + engrane de plano ——— */
+.line-mask {
+  display: block;
+  overflow: hidden;
+}
+.line-mask > span {
+  display: block;
+  transform: translateY(112%);
+  animation: line-up 0.95s cubic-bezier(0.22, 1, 0.36, 1)
+    var(--line-delay, 0ms) forwards;
+}
+@keyframes line-up {
+  to {
+    transform: translateY(0);
+  }
+}
+.gear-spin {
+  animation: gear-spin 240s linear infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes gear-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .line-mask > span {
+    animation: none;
+    transform: none;
+  }
+  .gear-spin {
+    animation: none;
   }
 }
 

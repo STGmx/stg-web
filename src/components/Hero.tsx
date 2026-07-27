@@ -1,94 +1,105 @@
-import Image from "next/image";
-import { SITE, WA_DEFAULT } from "@/lib/site";
-import { IconWhatsApp } from "./icons";
+import type { CSSProperties } from "react";
+
+/**
+ * Plano de ingeniería de un engrane (eco del logo): líneas de centro
+ * punto-raya, círculo de paso discontinuo, barreno de tornillos y cuñero.
+ * El engrane gira una vuelta cada 4 minutos; las líneas de centro,
+ * como en un plano real, no giran.
+ */
+function GearDrawing({ className }: { className: string }) {
+  const teeth = 28;
+  const bolts = 8;
+  return (
+    <svg
+      viewBox="-400 -400 800 800"
+      className={className}
+      aria-hidden="true"
+      fill="none"
+    >
+      {/* líneas de centro (anotación de plano: estáticas) */}
+      <g className="stroke-line" strokeWidth="1" opacity="0.55">
+        <path d="M-396 0H396" strokeDasharray="30 10 5 10" />
+        <path d="M0 -396V396" strokeDasharray="30 10 5 10" />
+      </g>
+
+      <g className="gear-spin stroke-line" strokeWidth="1.3">
+        {/* dientes */}
+        {Array.from({ length: teeth }, (_, i) => (
+          <rect
+            key={i}
+            x="-16"
+            y="-332"
+            width="32"
+            height="32"
+            rx="4"
+            transform={`rotate(${(i * 360) / teeth})`}
+          />
+        ))}
+        {/* cuerpo */}
+        <circle r="302" />
+        <circle r="220" />
+        {/* círculo de paso (convención de plano, en discontinua) */}
+        <circle r="317" strokeDasharray="7 9" className="stroke-accent" opacity="0.45" />
+        {/* círculo de barrenos */}
+        <circle r="260" strokeDasharray="22 8 4 8" opacity="0.5" />
+        {Array.from({ length: bolts }, (_, i) => (
+          <circle
+            key={i}
+            cy="-260"
+            r="17"
+            transform={`rotate(${(i * 360) / bolts})`}
+          />
+        ))}
+        {/* masa y cuñero */}
+        <circle r="96" />
+        <path d="M-13 -96h26v-19h-26z" />
+      </g>
+    </svg>
+  );
+}
 
 export default function Hero() {
   return (
     <section
       id="inicio"
-      className="relative flex min-h-svh items-center justify-center overflow-hidden pb-16 pt-28"
+      className="relative flex min-h-svh items-center overflow-hidden pb-24 pt-28"
     >
-      {/* Dynamic Background Elements */}
-      <div className="absolute inset-0 bg-[#0a0f18]" aria-hidden="true">
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-        {/* Glowing orbs */}
-        <div className="absolute left-0 top-0 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20 blur-[120px]"></div>
-        <div className="absolute bottom-0 right-0 h-[600px] w-[600px] translate-x-1/3 translate-y-1/3 rounded-full bg-blue-500/10 blur-[150px]"></div>
+      <div className="absolute inset-0" aria-hidden="true">
+        <div className="absolute inset-0 bg-[radial-gradient(120%_90%_at_18%_8%,#0e1726_0%,#0a0f18_55%)]" />
+        <GearDrawing className="absolute -right-44 top-1/2 hidden h-[54rem] w-[54rem] -translate-y-1/2 opacity-90 md:block" />
+        <GearDrawing className="absolute -right-40 -top-32 h-[26rem] w-[26rem] opacity-60 md:hidden" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-navy" />
       </div>
 
-      <div className="wrap relative flex flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-16">
-        
-        {/* Left Content */}
-        <div className="flex max-w-2xl flex-col items-start text-left lg:w-1/2">
-          
-          <div
-            className="rise inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-md"
-            style={{ "--rise-delay": "80ms" } as React.CSSProperties}
-          >
-            <span className="flex h-2 w-2 rounded-full bg-accent animate-pulse"></span>
-            <span className="text-sm font-medium tracking-wide text-silver">Operando en {SITE.city} y la región</span>
-          </div>
-
-          <h1
-            className="rise mt-8 font-serif text-5xl font-bold leading-[1.1] tracking-tight text-white sm:text-6xl lg:text-7xl"
-            style={{ "--rise-delay": "150ms" } as React.CSSProperties}
-          >
-            Especialistas en <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-silver-3">mantenimiento crítico</span> y generación.
-          </h1>
-
-          <p
-            className="rise mt-8 text-lg leading-relaxed text-silver-2 sm:text-xl"
-            style={{ "--rise-delay": "250ms" } as React.CSSProperties}
-          >
-            Brindamos soluciones integrales, rápidas y efectivas para que las operaciones de tu empresa nunca se detengan.
-          </p>
-
-          <div
-            className="rise mt-10 flex w-full flex-col gap-4 sm:flex-row sm:items-center"
-            style={{ "--rise-delay": "350ms" } as React.CSSProperties}
-          >
-            <a 
-              href="#contacto" 
-              className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-accent px-8 py-3.5 font-bold text-navy transition-transform hover:scale-105"
+      <div className="wrap relative">
+        <h1 className="font-serif text-[2.7rem] font-bold leading-[1.07] tracking-tight text-white sm:text-[4rem] lg:text-[5.25rem] xl:text-[6rem]">
+          <span className="line-mask">
+            <span style={{ "--line-delay": "120ms" } as CSSProperties}>
+              Especialistas en
+            </span>
+          </span>
+          <span className="line-mask">
+            <span
+              className="font-semibold italic text-accent"
+              style={{ "--line-delay": "280ms" } as CSSProperties}
             >
-              <span className="relative z-10">Solicitar cotización</span>
-              <div className="absolute inset-0 bg-white/20 transition-transform group-hover:scale-x-100 scale-x-0 origin-left"></div>
-            </a>
-            
-            <a
-              href={WA_DEFAULT}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-line-2 bg-navy/50 px-8 py-3.5 font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/10"
-            >
-              <IconWhatsApp className="h-5 w-5 text-[#25D366]" />
-              WhatsApp directo
-            </a>
-          </div>
-        </div>
+              mantenimiento crítico
+            </span>
+          </span>
+          <span className="line-mask">
+            <span style={{ "--line-delay": "440ms" } as CSSProperties}>
+              y generación.
+            </span>
+          </span>
+        </h1>
 
-        {/* Right Graphic/Logo Showcase */}
-        <div 
-          className="rise mt-16 flex justify-center lg:mt-0 lg:w-1/2 lg:justify-end"
-          style={{ "--rise-delay": "500ms" } as React.CSSProperties}
+        <p
+          className="rise mt-10 max-w-xl border-l-2 border-accent/70 pl-6 text-lg leading-relaxed text-silver-2 sm:text-xl lg:ml-[34%]"
+          style={{ "--rise-delay": "760ms" } as CSSProperties}
         >
-          <div className="relative flex h-72 w-72 items-center justify-center rounded-full border border-white/5 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-sm sm:h-96 sm:w-96">
-            {/* Pulsing rings */}
-            <div className="absolute inset-0 animate-ping rounded-full border border-accent/20 opacity-20" style={{ animationDuration: '3s' }}></div>
-            <div className="absolute inset-4 rounded-full border border-white/10"></div>
-            
-            <Image
-              src="/logo.png"
-              alt="Logotipo de Servicios Técnicos y de Generación"
-              width={456}
-              height={322}
-              priority
-              className="relative z-10 w-48 drop-shadow-2xl sm:w-64"
-            />
-          </div>
-        </div>
-
+          Brindamos soluciones integrales, rápidas y efectivas para que las
+          operaciones de tu empresa nunca se detengan.
+        </p>
       </div>
     </section>
   );

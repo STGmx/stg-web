@@ -72,7 +72,7 @@ export default function Header() {
           </a>
           <a 
             href="#contacto" 
-            className="rounded-full bg-accent px-6 py-2.5 text-[0.95rem] font-bold text-navy shadow-lg shadow-accent/20 transition-all hover:scale-105 hover:bg-accent-light"
+            className="rounded-full bg-accent px-6 py-2.5 text-[0.95rem] font-bold text-navy shadow-lg shadow-accent/20 transition-all hover:scale-105 hover:bg-accent-2"
           >
             Cotizar ahora
           </a>
@@ -120,7 +120,7 @@ export default function Header() {
               </a>
               <a
                 href="#contacto"
-                className="w-full rounded-full bg-accent py-3 text-center text-[1.05rem] font-bold text-navy shadow-lg shadow-accent/20 transition-colors hover:bg-accent-light"
+                className="w-full rounded-full bg-accent py-3 text-center text-[1.05rem] font-bold text-navy shadow-lg shadow-accent/20 transition-colors hover:bg-accent-2"
                 onClick={() => setOpen(false)}
               >
                 Cotizar ahora
