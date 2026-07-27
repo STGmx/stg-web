@@ -21,6 +21,8 @@ export interface Service {
   description: string;
   modalidades?: Modalidad[];
   waMessage: string;
+  image: string;
+  imageAlt: string;
 }
 
 export const SERVICES: Service[] = [
@@ -32,6 +34,8 @@ export const SERVICES: Service[] = [
       "Mantenimiento a cocina fría, caliente y sistemas de refrigeración. Venta de refaccionamiento europeo.",
     waMessage:
       "Hola, STG. Me interesa una cotización de mantenimiento de cocina y refrigeración.",
+    image: "/services/cocina.png",
+    imageAlt: "Cocina industrial y sistemas de refrigeración comerciales",
   },
   {
     slug: "generadores",
@@ -40,6 +44,8 @@ export const SERVICES: Service[] = [
     description: "Venta, renta y servicio técnico a generadores eléctricos.",
     waMessage:
       "Hola, STG. Me interesa una cotización de venta, renta o servicio a generadores.",
+    image: "/services/generadores.png",
+    imageAlt: "Generador eléctrico industrial en cuarto de máquinas",
   },
   {
     slug: "trabajos-electricos",
@@ -49,6 +55,8 @@ export const SERVICES: Service[] = [
       "Media y baja tensión: transformadores, tableros, canalización aérea y subterránea, derivación eléctrica.",
     waMessage:
       "Hola, STG. Me interesa una cotización de trabajos eléctricos.",
+    image: "/services/electricos.png",
+    imageAlt: "Tableros eléctricos y transformadores de media y baja tensión",
   },
   {
     slug: "sistemas-mecanicos",
@@ -58,6 +66,8 @@ export const SERVICES: Service[] = [
       "Cortinas, rampas de emergencia, bandas mecanizadas y andenes mecánicos.",
     waMessage:
       "Hola, STG. Me interesa una cotización de mantenimiento a sistemas mecánicos.",
+    image: "/services/mecanicos.png",
+    imageAlt: "Andenes mecánicos y rampas de emergencia industriales",
   },
   {
     slug: "personal-en-sitio",
@@ -79,5 +89,7 @@ export const SERVICES: Service[] = [
     ],
     waMessage:
       "Hola, STG. Me interesa una cotización de personal en sitio.",
+    image: "/services/personal.png",
+    imageAlt: "Personal técnico calificado en sitio",
   },
 ];

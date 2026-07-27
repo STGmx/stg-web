@@ -17,7 +17,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -25,61 +25,70 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b bg-navy/75 backdrop-blur-md transition-colors duration-300 ${
-        scrolled ? "border-line-2" : "border-transparent"
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? "bg-[#0a0f18]/85 backdrop-blur-xl border-b border-white/5 py-3 shadow-lg" 
+          : "bg-transparent py-5"
       }`}
     >
-      <div className="wrap flex h-16 items-center justify-between gap-6">
+      <div className="wrap flex items-center justify-between gap-8">
+        {/* Logo */}
         <a
           href="#inicio"
-          className="flex min-w-0 items-center gap-3"
+          className="flex shrink-0 items-center gap-3 transition-opacity hover:opacity-80"
           aria-label={`${SITE.shortName} — inicio`}
           onClick={() => setOpen(false)}
         >
           <Image
             src="/logo.png"
-            alt=""
+            alt="STG Logo"
             width={456}
             height={322}
             priority
-            className="h-9 w-auto"
+            className="h-9 w-auto object-contain sm:h-10"
           />
-          <span className="hidden truncate font-serif text-[1.05rem] tracking-wide text-silver min-[900px]:block">
-            Servicios Técnicos y de Generación
-          </span>
         </a>
 
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Principal">
+        {/* Centered Desktop Nav */}
+        <nav className="hidden flex-1 items-center justify-center gap-8 lg:flex" aria-label="Principal">
           {NAV.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="text-[0.9rem] font-medium text-silver-2 transition-colors hover:text-white"
+              className="text-[0.95rem] font-medium text-silver-2 transition-colors hover:text-accent"
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-5 lg:flex">
-          <a href={SITE.phoneHref} className="dato text-[0.9rem] hover:text-white">
+        {/* Right CTA */}
+        <div className="hidden shrink-0 items-center gap-6 lg:flex">
+          <a 
+            href={SITE.phoneHref} 
+            className="text-[0.95rem] font-semibold text-silver hover:text-white transition-colors"
+          >
             {SITE.phoneDisplay}
           </a>
-          <a href="#contacto" className="btn-primary !px-5 !py-2 text-[0.875rem]">
-            Solicitar cotización
+          <a 
+            href="#contacto" 
+            className="rounded-full bg-accent px-6 py-2.5 text-[0.95rem] font-bold text-navy shadow-lg shadow-accent/20 transition-all hover:scale-105 hover:bg-accent-light"
+          >
+            Cotizar ahora
           </a>
         </div>
 
+        {/* Mobile menu button */}
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-md border border-line text-silver lg:hidden"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/5 text-silver transition-colors hover:bg-white/10 lg:hidden"
           aria-expanded={open}
           aria-label={open ? "Cerrar menú" : "Abrir menú"}
           onClick={() => setOpen((v) => !v)}
         >
-          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round">
+          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
             {open ? (
-              <path d="M6 6l12 12M18 6 6 18" />
+              <path d="M6 18L18 6M6 6l12 12" />
             ) : (
               <path d="M4 7h16M4 12h16M4 17h16" />
             )}
@@ -87,34 +96,34 @@ export default function Header() {
         </button>
       </div>
 
-      {/* panel móvil */}
+      {/* Mobile Menu Panel */}
       <div
-        className={`grid overflow-hidden border-b border-line-2 bg-navy/95 backdrop-blur-md transition-[grid-template-rows] duration-300 lg:hidden ${
-          open ? "grid-rows-[1fr]" : "grid-rows-[0fr] border-b-0"
+        className={`grid overflow-hidden bg-[#0a0f18]/95 backdrop-blur-xl transition-[grid-template-rows] duration-300 lg:hidden ${
+          open ? "grid-rows-[1fr] border-b border-white/10 shadow-2xl" : "grid-rows-[0fr]"
         }`}
       >
         <div className="min-h-0">
-          <nav className="wrap flex flex-col py-3" aria-label="Principal móvil">
+          <nav className="wrap flex flex-col py-6" aria-label="Principal móvil">
             {NAV.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="border-b border-line-2 py-3.5 text-[0.95rem] font-medium text-silver last:border-0"
+                className="border-b border-white/5 py-4 text-center text-lg font-medium text-silver transition-colors hover:text-accent last:border-0"
                 onClick={() => setOpen(false)}
               >
                 {item.label}
               </a>
             ))}
-            <div className="flex items-center justify-between gap-4 py-4">
-              <a href={SITE.phoneHref} className="dato">
+            <div className="mt-6 flex flex-col items-center gap-4">
+              <a href={SITE.phoneHref} className="text-lg font-semibold text-silver">
                 {SITE.phoneDisplay}
               </a>
               <a
                 href="#contacto"
-                className="btn-primary !px-5 !py-2 text-[0.875rem]"
+                className="w-full rounded-full bg-accent py-3 text-center text-[1.05rem] font-bold text-navy shadow-lg shadow-accent/20 transition-colors hover:bg-accent-light"
                 onClick={() => setOpen(false)}
               >
-                Cotizar
+                Cotizar ahora
               </a>
             </div>
           </nav>
