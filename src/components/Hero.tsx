@@ -20,6 +20,9 @@ const GLYPHS: Record<ServiceSlug, typeof IconSnowflake> = {
   "personal-en-sitio": IconTeam,
 };
 
+const NOISE =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
+
 /* altura de exhibición por logo */
 const CLIENT_LOGO_H: Record<string, string> = {
   zoetry: "h-10",
@@ -35,10 +38,25 @@ export default function Hero() {
       id="inicio"
       className="relative flex min-h-svh flex-col overflow-hidden bg-navy pt-28"
     >
-      {/* fondo técnico: grid, luces desenfocadas */}
-      <div className="absolute inset-0 grid-paper pointer-events-none opacity-[0.35]" aria-hidden="true" />
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-stg-blue/15 blur-[120px] rounded-full pointer-events-none translate-x-1/3 -translate-y-1/3" aria-hidden="true" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent/10 blur-[100px] rounded-full pointer-events-none -translate-x-1/3 translate-y-1/3" aria-hidden="true" />
+      {/* fondo: fotografía industrial con filtro duotono navy + grano */}
+      <div className="absolute inset-0" aria-hidden="true">
+        <Image
+          src="/services/electricos.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[70%_62%] opacity-45 grayscale"
+        />
+        <div className="absolute inset-0 bg-stg-blue/25 mix-blend-color" />
+        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-navy/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy/95 via-transparent to-navy/90" />
+        <div className="absolute right-0 top-0 h-72 w-1/2 bg-gradient-to-bl from-navy/80 via-navy/30 to-transparent" />
+        <div
+          className="absolute inset-0 opacity-[0.13] mix-blend-overlay"
+          style={{ backgroundImage: NOISE }}
+        />
+      </div>
 
       <div className="wrap relative z-10 flex flex-1 flex-col justify-center py-12">
         <div className="grid w-full items-center gap-12 lg:grid-cols-12">
@@ -99,19 +117,23 @@ export default function Hero() {
             className="rise hidden lg:grid lg:col-span-4 grid-cols-2 grid-rows-2 gap-4 h-full max-h-[360px]"
             style={{ "--rise-delay": "700ms" } as CSSProperties}
           >
-            <div className="card card-hover flex flex-col justify-between p-6">
-              <IconGear className="h-8 w-8 text-accent gear-spin" />
-              <div className="mt-6">
-                <span className="block text-3xl font-bold text-white mb-1">24/7</span>
-                <span className="rotulo">Disponibilidad</span>
-              </div>
+            {/* placa de marca */}
+            <div className="card card-hover flex items-center justify-center p-6">
+              <Image
+                src="/logo.png"
+                alt="Logotipo STG"
+                width={456}
+                height={322}
+                className="w-28 drop-shadow-[0_10px_24px_rgba(0,0,0,0.55)]"
+              />
             </div>
 
-            <div className="card card-hover flex flex-col justify-between p-6">
-              <IconBolt className="h-8 w-8 text-accent" />
-              <div className="mt-6">
-                <span className="block text-3xl font-bold text-white mb-1">100%</span>
-                <span className="rotulo">Efectividad</span>
+            {/* lámina fotográfica */}
+            <div className="card group relative overflow-hidden">
+              <div className="absolute inset-0 bg-[url('/services/cocina.png')] bg-cover bg-center opacity-45 mix-blend-luminosity transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-2 via-navy-2/30 to-transparent" />
+              <div className="relative z-10 flex h-full flex-col justify-end p-5">
+                <IconSnowflake className="h-6 w-6 text-accent" />
               </div>
             </div>
 
