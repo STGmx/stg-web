@@ -31,11 +31,13 @@ export default function Header() {
           : "bg-transparent py-5"
       }`}
     >
-      <div className="wrap flex items-center justify-between gap-8">
+      {/* retícula de tres pistas iguales: el menú queda centrado óptico
+          aunque el logo y el bloque derecho pesen distinto */}
+      <div className="wrap grid grid-cols-[1fr_auto_1fr] items-center gap-8">
         {/* Logo */}
         <a
           href="#inicio"
-          className="flex shrink-0 items-center gap-3 transition-opacity hover:opacity-80"
+          className="flex items-center gap-3 justify-self-start transition-opacity hover:opacity-80"
           aria-label={`${SITE.shortName} — inicio`}
           onClick={() => setOpen(false)}
         >
@@ -45,12 +47,12 @@ export default function Header() {
             width={456}
             height={322}
             priority
-            className="h-9 w-auto object-contain sm:h-10"
+            className="h-11 w-auto object-contain sm:h-12"
           />
         </a>
 
         {/* Centered Desktop Nav */}
-        <nav className="hidden flex-1 items-center justify-center gap-8 lg:flex" aria-label="Principal">
+        <nav className="hidden items-center justify-center gap-8 lg:flex" aria-label="Principal">
           {NAV.map((item) => (
             <a
               key={item.href}
@@ -62,38 +64,39 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Right CTA */}
-        <div className="hidden shrink-0 items-center gap-6 lg:flex">
-          <a 
-            href={SITE.phoneHref} 
-            className="text-[0.95rem] font-semibold text-silver hover:text-white transition-colors"
-          >
-            {SITE.phoneDisplay}
-          </a>
-          <a 
-            href="#contacto" 
-            className="rounded-full bg-accent px-6 py-2.5 text-[0.95rem] font-bold text-navy shadow-lg shadow-accent/20 transition-all hover:scale-105 hover:bg-accent-2"
-          >
-            Cotizar ahora
-          </a>
-        </div>
+        {/* Bloque derecho: CTA escritorio + botón móvil */}
+        <div className="flex items-center justify-self-end">
+          <div className="hidden items-center gap-6 lg:flex">
+            <a
+              href={SITE.phoneHref}
+              className="text-[0.95rem] font-semibold text-silver hover:text-white transition-colors"
+            >
+              {SITE.phoneDisplay}
+            </a>
+            <a
+              href="#contacto"
+              className="rounded-full bg-accent px-6 py-2.5 text-[0.95rem] font-bold text-navy shadow-lg shadow-accent/20 transition-all hover:scale-105 hover:bg-accent-2"
+            >
+              Cotizar ahora
+            </a>
+          </div>
 
-        {/* Mobile menu button */}
-        <button
-          type="button"
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/5 text-silver transition-colors hover:bg-white/10 lg:hidden"
-          aria-expanded={open}
-          aria-label={open ? "Cerrar menú" : "Abrir menú"}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
-            {open ? (
-              <path d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            )}
-          </svg>
-        </button>
+          <button
+            type="button"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/5 text-silver transition-colors hover:bg-white/10 lg:hidden"
+            aria-expanded={open}
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            onClick={() => setOpen((v) => !v)}
+          >
+            <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round">
+              {open ? (
+                <path d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path d="M4 7h16M4 12h16M4 17h16" />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Panel */}
