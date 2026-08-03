@@ -40,9 +40,9 @@ export const CONTACTS = [
     icon: "helmet" as const,
   },
   {
-    role: "Ventas",
+    role: "Cotizaciones",
     person: null,
-    email: "ventas@stgmx.mx",
+    email: "auxadministracion@stgmx.mx",
     icon: "chart" as const,
   },
   {

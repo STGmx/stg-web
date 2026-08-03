@@ -37,11 +37,11 @@ export default function Contacto() {
                 WhatsApp
               </a>
               <a
-                href="mailto:ventas@stgmx.mx"
+                href="mailto:auxadministracion@stgmx.mx"
                 className="btn-ghost !px-5 !py-2.5 text-[0.9rem]"
               >
                 <IconMail className="h-[1.05rem] w-[1.05rem]" />
-                ventas@stgmx.mx
+                auxadministracion@stgmx.mx
               </a>
             </div>
           </Reveal>

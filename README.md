@@ -11,7 +11,7 @@ Landing de una sola página para STG (mantenimiento, refrigeración y generació
 - Next.js 16 (App Router) + TypeScript estricto + Tailwind v4 (`@theme` en `globals.css`)
 - Export estático (`output: "export"` → `out/`), sin backend ni API keys
 - Tipografías: Source Serif 4 (titulares) + Source Sans 3 (texto) vía `next/font`
-- Formulario compone mensaje → WhatsApp `998 707 54 27` o `mailto:ventas@stgmx.mx`
+- Formulario compone mensaje → WhatsApp `998 317 01 73` o `mailto:` al correo de cotización (`SITE.quoteEmail`)
 
 ```bash
 npm run dev      # desarrollo
