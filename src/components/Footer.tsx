@@ -31,9 +31,10 @@ export default function Footer() {
         </div>
 
         <p className="mx-auto mt-10 max-w-2xl text-center font-serif text-[1.4rem] leading-snug text-silver sm:text-[1.7rem]">
-          Soluciones integrales de mantenimiento, refrigeración y generación de
-          energía{" "}
-          <span className="italic text-silver-2">para empresas.</span>
+          Servicios de la más alta calidad,{" "}
+          <span className="italic text-silver-2">
+            al mejor costo del mercado.
+          </span>
         </p>
 
         <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -47,7 +48,7 @@ export default function Footer() {
             className="btn-wa w-full sm:w-auto"
           >
             <IconWhatsApp className="h-[1.15rem] w-[1.15rem]" />
-            WhatsApp · {SITE.phoneDisplay}
+            WhatsApp · {SITE.whatsappDisplay}
           </a>
         </div>
       </div>

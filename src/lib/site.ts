@@ -1,6 +1,7 @@
 /**
  * Datos de contacto y constantes del sitio.
- * Fuente única: docs/brochure_stg.pdf — no añadir datos que no estén ahí.
+ * Fuente única: docs/brochure_stg.pdf y datos de contacto confirmados
+ * por el cliente (2026-08) — no añadir datos que no vengan de ahí.
  */
 
 export const SITE = {
@@ -12,7 +13,9 @@ export const SITE = {
   city: "Cancún, Quintana Roo",
   phoneDisplay: "998 707 54 27",
   phoneHref: "tel:+529987075427",
-  whatsappNumber: "529987075427",
+  whatsappNumber: "529983170173",
+  whatsappDisplay: "998 317 01 73",
+  quoteEmail: "direccionoperaciones@stgmx.mx",
 } as const;
 
 export function waLink(message: string): string {

@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { SERVICES } from "@/lib/services";
-import { waLink } from "@/lib/site";
+import { SITE, waLink } from "@/lib/site";
 import { IconWhatsApp, IconMail } from "./icons";
 
 /**
  * Sin backend: el formulario compone el mensaje y lo entrega
- * por WhatsApp o por correo (mailto a ventas@stgmx.mx).
+ * por WhatsApp o por correo (mailto a SITE.quoteEmail).
  */
 export default function ContactForm() {
   const [nombre, setNombre] = useState("");
@@ -32,7 +32,7 @@ export default function ContactForm() {
 
   const sendMail = () => {
     const subject = `Solicitud de cotización${empresa.trim() ? ` — ${empresa.trim()}` : ""}`;
-    window.location.href = `mailto:ventas@stgmx.mx?subject=${encodeURIComponent(
+    window.location.href = `mailto:${SITE.quoteEmail}?subject=${encodeURIComponent(
       subject,
     )}&body=${encodeURIComponent(compose())}`;
   };
