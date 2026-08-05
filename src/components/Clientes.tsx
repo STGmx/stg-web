@@ -37,7 +37,7 @@ export default function Clientes() {
     <section id="clientes" className="py-24 sm:py-32">
       <div className="wrap">
         <SectionHead
-          title="Nuestros clientes"
+          title="Casos de éxito:"
           lead="Empresas en hospitalidad, retail, logística e infraestructura confían en nosotros."
         />
       </div>
