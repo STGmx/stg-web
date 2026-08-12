@@ -35,7 +35,7 @@ export default function LogoMark({
     >
       <Image
         src={src}
-        alt={`Logotipo de ${name}`}
+        alt={name ? `Logotipo de ${name}` : ""}
         width={240}
         height={60}
         className={`${IMG[shape]} opacity-90 transition-opacity duration-300 group-hover:opacity-0`}

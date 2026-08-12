@@ -1,6 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 
+/**
+ * Sin `metadata` propio: `not-found.tsx` no lo admite y Next ya emite
+ * `<meta name="robots" content="noindex">` en esta ruta. Declararlo a mano
+ * duplicaba <title> en el 404.html exportado. La cabecera `X-Robots-Tag` de
+ * netlify.toml refuerza lo mismo para quien llegue directo a /404.html.
+ */
 export default function NotFound() {
   return (
     <main className="flex min-h-svh flex-col items-center justify-center gap-6 px-6 text-center">

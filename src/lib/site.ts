@@ -13,10 +13,55 @@ export const SITE = {
   city: "Cancún, Quintana Roo",
   phoneDisplay: "998 707 54 27",
   phoneHref: "tel:+529987075427",
+  phoneE164: "+52 998 707 5427",
   whatsappNumber: "529983170173",
   whatsappDisplay: "998 317 01 73",
   quoteEmail: "direccionoperaciones@stgmx.mx",
+
+  /* — SEO — Dominio canónico. Se hornea en el export estático: cambiarlo
+     aquí actualiza canonical, sitemap, robots, Open Graph y JSON-LD. */
+  url: "https://stgmx.mx",
+  locale: "es-MX",
+  /* Fecha de última revisión de contenido; alimenta <lastmod> del sitemap.
+     Actualizar solo cuando cambie el contenido, no en cada despliegue. */
+  contentUpdated: "2026-08-12",
 } as const;
+
+/** Localidad de operación, desglosada para schema.org. */
+export const GEO = {
+  locality: "Cancún",
+  region: "Quintana Roo",
+  regionCode: "MX-ROO",
+  country: "México",
+  countryCode: "MX",
+} as const;
+
+/**
+ * Perfiles oficiales para `sameAs` del JSON-LD (ayuda a Google a consolidar
+ * la entidad "STG"). Vacío a propósito: el cliente aún no confirma perfiles.
+ * Añadir aquí la URL y se propaga a los datos estructurados sin más cambios.
+ */
+export const SOCIAL_PROFILES: readonly string[] = [];
+
+/**
+ * Términos objetivo del sitio. Google ignora <meta keywords>, pero esta lista
+ * es la referencia editorial de la que salen title, description y JSON-LD, y
+ * la consumen buscadores menores y rastreadores de IA.
+ */
+export const SEO_KEYWORDS = [
+  "mantenimiento industrial en Cancún",
+  "mantenimiento preventivo y correctivo",
+  "servicio a generadores eléctricos Cancún",
+  "renta de generadores Cancún",
+  "mantenimiento de refrigeración comercial",
+  "mantenimiento de cocina industrial",
+  "refaccionamiento europeo para cocina",
+  "trabajos eléctricos media y baja tensión",
+  "transformadores y tableros eléctricos Quintana Roo",
+  "sistemas mecánicos, andenes y rampas",
+  "personal técnico en sitio",
+  "STG Servicios Técnicos y de Generación",
+] as const;
 
 export function waLink(message: string): string {
   return `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(message)}`;

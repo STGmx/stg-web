@@ -26,6 +26,7 @@ export default function Hero() {
   return (
     <section
       id="inicio"
+      aria-labelledby="h-inicio"
       className="relative flex min-h-svh flex-col overflow-hidden bg-navy pt-28"
     >
       {/* fondo: fotografía industrial con filtro duotono navy + grano */}
@@ -66,7 +67,10 @@ export default function Hero() {
           <span className="h-px flex-1 bg-gradient-to-l from-transparent to-line" />
         </div>
 
-        <h1 className="mt-8 font-serif text-[2.8rem] font-bold leading-[1.07] tracking-tight text-white sm:text-[3.6rem] lg:text-[4.2rem]">
+        <h1
+          id="h-inicio"
+          className="mt-8 font-serif text-[2.8rem] font-bold leading-[1.07] tracking-tight text-white sm:text-[3.6rem] lg:text-[4.2rem]"
+        >
           <span className="line-mask">
             <span style={{ "--line-delay": "200ms" } as CSSProperties}>
               Especialistas en
@@ -137,9 +141,13 @@ export default function Hero() {
                       0{i + 1}
                     </span>
                   </div>
-                  <h3 className="font-semibold text-silver transition-colors group-hover:text-white pr-4">
+                  {/* No es un encabezado: es la etiqueta de un enlace de salto
+                      a la sección Servicios, donde el mismo título ya vive en
+                      un <h3>. Marcarlo como h3 aquí rompería el orden h1→h2→h3
+                      y duplicaría los encabezados de las cinco líneas. */}
+                  <span className="font-semibold text-silver transition-colors group-hover:text-white pr-4">
                     {service.title}
-                  </h3>
+                  </span>
 
                   {/* Flecha revelable */}
                   <span className="absolute bottom-6 right-6 -translate-x-4 text-accent opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">

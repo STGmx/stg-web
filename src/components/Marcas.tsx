@@ -10,8 +10,12 @@ import LogoMark from "./LogoMark";
  */
 export default function Marcas() {
   return (
-    <section id="marcas" className="wrap py-24 sm:py-32">
-      <SectionHead title="Marcas con las que trabajamos" />
+    <section
+      id="marcas"
+      aria-labelledby="h-marcas"
+      className="wrap py-24 sm:py-32"
+    >
+      <SectionHead id="h-marcas" title="Marcas con las que trabajamos" />
 
       <div className="flex flex-col gap-12">
         {BRAND_GROUPS.map((group) => (

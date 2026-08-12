@@ -21,6 +21,34 @@ node scripts/shoot.mjs   # capturas responsive (requiere out/ servido en :8123)
 
 Capturas: `python3 -m http.server 8123 -d out` y luego el script (usa el Chrome del sistema vía puppeteer-core; móvil a dsf 1 porque la página completa supera el límite de textura de Chrome con dsf 2; el script fuerza `loading=eager`+`decode()` porque fullPage pinta en blanco las imágenes lazy).
 
+## SEO e indexación
+
+Dominio canónico: **`https://stgmx.mx`** (sin www). Vive en `SITE.url` (`src/lib/site.ts`) y de ahí salen canonical, sitemap, robots, Open Graph y JSON-LD; cambiarlo ahí basta.
+
+| Pieza | Archivo | Sale en |
+| --- | --- | --- |
+| Title, description, canonical, OG, Twitter, robots, iconos | `src/app/layout.tsx` | `<head>` de todas las páginas |
+| Datos estructurados (Organization + 5 Service + OfferCatalog + WebSite + WebPage) | `src/lib/schema.ts` | `<script type="application/ld+json">` |
+| `robots.txt` | `src/app/robots.ts` | `/robots.txt` |
+| `sitemap.xml` | `src/app/sitemap.ts` | `/sitemap.xml` |
+| Manifest web | `src/app/manifest.ts` | `/manifest.webmanifest` |
+| Tarjeta social 1200×630 | `src/app/opengraph-image.tsx` | `/opengraph-image` |
+| Verificación de Search Console | `public/google9af7261fc2b26199.html` | raíz del sitio |
+| Redirección www→raíz, `noindex` del 404, MIME del OG, caché y seguridad | `netlify.toml` | cabeceras HTTP |
+
+Notas del entorno: con `output: "export"` toda ruta de metadata (`robots`, `sitemap`, `manifest`, `opengraph-image`) necesita `export const dynamic = "force-static"` o el build falla. `not-found.tsx` no admite `export metadata`; Next ya le pone `noindex` solo.
+
+Al cambiar contenido de la landing, actualizar `SITE.contentUpdated` — alimenta el `<lastmod>` del sitemap y no debe moverse en cada despliegue.
+
+### Alta en Google (una sola vez, tras conectar el dominio)
+
+1. En Netlify, fijar `stgmx.mx` como **primary domain** (la redirección de www ya está en `netlify.toml`).
+2. Search Console → añadir propiedad. Con el archivo de verificación ya desplegado, basta pulsar *Verificar*. Conviene además dar de alta la propiedad de **dominio** vía DNS: cubre www, http y subdominios.
+3. Sitemaps → enviar `sitemap.xml`.
+4. Inspección de URLs → pegar `https://stgmx.mx/` → *Solicitar indexación*.
+5. Comprobar la ficha en [Rich Results Test](https://search.google.com/test/rich-results) y la vista previa social en el depurador de LinkedIn/WhatsApp.
+6. Crear el **Perfil de Empresa de Google** (Cancún): es la palanca más grande para búsquedas locales. Al tenerlo, pegar su URL en `SOCIAL_PROFILES` (`src/lib/site.ts`) para que entre en el `sameAs` del JSON-LD.
+
 ## Sistema de diseño
 
 "Papelería de ingeniería sobre navy": base `#0C1522` (entorno nativo del logo), superficie `#121E2F`, tinta plata, acento único cobalto `#74A7D8`, botón primario placa blanca. **Cero amarillo en la UI** (el rayo del logo es la única nota cálida) y **verde solo para WhatsApp**. Servicios en retícula directa 2+2+ancho (las cinco líneas visibles de inmediato).
@@ -38,4 +66,6 @@ Capturas: `python3 -m http.server 8123 -d out` y luego el script (usa el Chrome 
 | Casos de servicio con datos (tiempos, alcance) | Sección de prueba social (fase 2) |
 | Certificaciones / SLA por escrito | Solo si existen documentados |
 | Logo vectorial oficial | Hoy se usa el PNG extraído del brochure |
-| Dominio stgmx.mx conectado | Retirar `noindex` en `layout.tsx` |
+| Dominio stgmx.mx apuntado a Netlify | Es lo único que falta para indexar; el sitio ya está en `index, follow` |
+| URL del Perfil de Empresa de Google / LinkedIn | `SOCIAL_PROFILES` en `src/lib/site.ts` → `sameAs` del JSON-LD |
+| Dirección física y horario | Subir el JSON-LD de `Organization` a `LocalBusiness` con `PostalAddress` y `openingHours` |

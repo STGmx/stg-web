@@ -6,8 +6,106 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# ——————————————————————————————————————————————
+# Canonicalización de dominio
+# Una sola forma indexable: https://stgmx.mx (sin www). Evita que Google vea
+# dos sitios idénticos y reparta la autoridad entre ellos.
+# ——————————————————————————————————————————————
+[[redirects]]
+  from = "https://www.stgmx.mx/*"
+  to = "https://stgmx.mx/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.stgmx.mx/*"
+  to = "https://stgmx.mx/:splat"
+  status = 301
+  force = true
+
+# ——————————————————————————————————————————————
+# Cabeceras
+# ——————————————————————————————————————————————
+
+# Seguridad y privacidad en todo el sitio.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+    Strict-Transport-Security = "max-age=31536000"
+
+# La tarjeta social la genera Next como archivo SIN extensión (`out/opengraph-image`).
+# Sin este Content-Type, Netlify la sirve como binario y WhatsApp, LinkedIn o
+# Slack no muestran la vista previa.
+[[headers]]
+  for = "/opengraph-image"
+  [headers.values]
+    Content-Type = "image/png"
+    Cache-Control = "public, max-age=86400"
+
+# El 404 se exporta como HTML servible; fuera del índice de Google.
+[[headers]]
+  for = "/404.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, follow"
+
+[[headers]]
+  for = "/404/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, follow"
+
+[[headers]]
+  for = "/_not-found/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, follow"
+
+# Next exporta la carga RSC de cada ruta como .txt (index.txt, __next.*.txt).
+# Son un volcado interno del árbol de React: si Google los indexa, aparecen
+# como resultados basura del dominio. Se rastrean, pero no se indexan.
+# (Afecta también a robots.txt, que Google nunca indexa: sin efecto.)
+[[headers]]
+  for = "/*.txt"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+
 # Los assets con hash de Next pueden cachearse para siempre
 [[headers]]
   for = "/_next/static/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Imágenes de public/: se revalidan a diario, se sirven de caché una semana.
+[[headers]]
+  for = "/marcas/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+  for = "/clientes/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+  for = "/services/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+# El HTML siempre se revalida: un despliegue debe verse al instante.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Que el rastreador vea los cambios de indexación sin esperar a una caché.
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"

@@ -6,13 +6,19 @@ import Reveal from "./Reveal";
 export default function SectionHead({
   title,
   lead,
+  id,
 }: {
   title: string;
   lead?: string;
+  /** Ancla el <h2> para que la <section> lo referencie con aria-labelledby. */
+  id?: string;
 }) {
   return (
     <Reveal className="mx-auto mb-14 max-w-2xl text-center sm:mb-16">
-      <h2 className="font-serif text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+      <h2
+        id={id}
+        className="font-serif text-3xl font-semibold tracking-tight text-white sm:text-4xl"
+      >
         {title}
       </h2>
       {lead ? (

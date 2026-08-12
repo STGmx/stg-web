@@ -23,8 +23,13 @@ const VALUE_ICONS = {
 
 export default function Nosotros() {
   return (
-    <section id="nosotros" className="wrap py-24 sm:py-32">
+    <section
+      id="nosotros"
+      aria-labelledby="h-nosotros"
+      className="wrap py-24 sm:py-32"
+    >
       <SectionHead
+        id="h-nosotros"
         title="Nosotros"
         lead="Somos un equipo de profesionales en mantenimiento a instalaciones, equipos y generación. Surgimos con la intención de brindar servicios de la más alta calidad al mejor costo del mercado."
       />

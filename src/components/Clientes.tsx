@@ -34,9 +34,14 @@ function Half({ hidden = false }: { hidden?: boolean }) {
 
 export default function Clientes() {
   return (
-    <section id="clientes" className="py-24 sm:py-32">
+    <section
+      id="clientes"
+      aria-labelledby="h-clientes"
+      className="py-24 sm:py-32"
+    >
       <div className="wrap">
         <SectionHead
+          id="h-clientes"
           title="Casos de éxito:"
           lead="Empresas en hospitalidad, retail, logística e infraestructura confían en nosotros."
         />

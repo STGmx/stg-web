@@ -10,8 +10,13 @@ import { IconWhatsApp, IconMail, IconPin } from "./icons";
  */
 export default function Contacto() {
   return (
-    <section id="contacto" className="wrap py-24 sm:py-32">
+    <section
+      id="contacto"
+      aria-labelledby="h-contacto"
+      className="wrap py-24 sm:py-32"
+    >
       <SectionHead
+        id="h-contacto"
         title="Contacto"
         lead="Cotice mantenimiento, refrigeración y generación de energía para su empresa."
       />

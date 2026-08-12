@@ -85,12 +85,17 @@ export default function Services() {
   const specialService = SERVICES.find((s) => s.slug === "personal-en-sitio");
 
   return (
-    <section id="servicios" className="relative py-24 sm:py-32 bg-navy">
+    <section
+      id="servicios"
+      aria-labelledby="h-servicios"
+      className="relative py-24 sm:py-32 bg-navy"
+    >
       {/* Patrón técnico de fondo */}
       <div className="absolute inset-0 grid-paper pointer-events-none opacity-[0.15]" aria-hidden="true" />
       
       <div className="wrap relative z-10">
         <SectionHead
+          id="h-servicios"
           title="Nuestros Servicios"
           lead="Mantenimiento correctivo, preventivo y de emergencia bajo estándares técnicos estrictos, garantizando eficiencia y continuidad operativa."
         />

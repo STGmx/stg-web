@@ -43,7 +43,7 @@ export default function Header() {
         >
           <Image
             src="/logo.png"
-            alt="STG Logo"
+            alt={`${SITE.name} (${SITE.shortName})`}
             width={456}
             height={322}
             priority
