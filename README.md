@@ -47,7 +47,13 @@ Al cambiar contenido de la landing, actualizar `SITE.contentUpdated` — aliment
 3. Sitemaps → enviar `sitemap.xml`.
 4. Inspección de URLs → pegar `https://stgmx.mx/` → *Solicitar indexación*.
 5. Comprobar la ficha en [Rich Results Test](https://search.google.com/test/rich-results) y la vista previa social en el depurador de LinkedIn/WhatsApp.
-6. Crear el **Perfil de Empresa de Google** (Cancún): es la palanca más grande para búsquedas locales. Al tenerlo, pegar su URL en `SOCIAL_PROFILES` (`src/lib/site.ts`) para que entre en el `sameAs` del JSON-LD.
+
+### Decisiones del cliente que acotan el SEO (2026-08-12)
+
+- **Sin redes sociales.** `SOCIAL_PROFILES` queda vacío y el JSON-LD no emite `sameAs`.
+- **Sin datos de ubicación.** El JSON-LD no lleva nodo `address` ni `PostalAddress`; solo `areaServed` (dónde se presta el servicio). Por lo mismo no se persigue un Perfil de Empresa de Google, que exige publicar domicilio o zona de cobertura.
+
+Consecuencia: la competencia se juega en búsqueda orgánica, no en el paquete local ni en el panel de mapas. Si algún día cambia el criterio, ambas piezas se reactivan añadiendo la URL en `SOCIAL_PROFILES` y el nodo `address` en `src/lib/schema.ts`.
 
 ## Sistema de diseño
 
@@ -67,5 +73,3 @@ Al cambiar contenido de la landing, actualizar `SITE.contentUpdated` — aliment
 | Certificaciones / SLA por escrito | Solo si existen documentados |
 | Logo vectorial oficial | Hoy se usa el PNG extraído del brochure |
 | Dominio stgmx.mx apuntado a Netlify | Es lo único que falta para indexar; el sitio ya está en `index, follow` |
-| URL del Perfil de Empresa de Google / LinkedIn | `SOCIAL_PROFILES` en `src/lib/site.ts` → `sameAs` del JSON-LD |
-| Dirección física y horario | Subir el JSON-LD de `Organization` a `LocalBusiness` con `PostalAddress` y `openingHours` |

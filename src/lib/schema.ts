@@ -58,14 +58,9 @@ const organization = {
   description: SITE.tagline,
   telephone: SITE.phoneE164,
   email: SITE.quoteEmail,
-  // Sin calle ni CP: el cliente aún no publica domicilio. Localidad y estado
-  // sí están confirmados y son los que dan la señal geográfica.
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: GEO.locality,
-    addressRegion: GEO.region,
-    addressCountry: GEO.countryCode,
-  },
+  // Sin nodo `address`: el cliente decidió no publicar datos de ubicación
+  // (2026-08-12). Queda solo `areaServed`, que declara dónde se presta el
+  // servicio sin afirmar dónde está la empresa.
   areaServed,
   knowsLanguage: ["es-MX"],
   // Marcas atendidas: refuerza la relevancia temática de la entidad.

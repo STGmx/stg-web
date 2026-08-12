@@ -27,19 +27,22 @@ export const SITE = {
   contentUpdated: "2026-08-12",
 } as const;
 
-/** Localidad de operación, desglosada para schema.org. */
+/**
+ * Zona donde STG presta servicio, desglosada para el `areaServed` de
+ * schema.org. NO es un domicilio: el cliente decidió no publicar datos de
+ * ubicación (2026-08-12), así que el JSON-LD no emite nodo `address`.
+ */
 export const GEO = {
   locality: "Cancún",
   region: "Quintana Roo",
-  regionCode: "MX-ROO",
   country: "México",
   countryCode: "MX",
 } as const;
 
 /**
- * Perfiles oficiales para `sameAs` del JSON-LD (ayuda a Google a consolidar
- * la entidad "STG"). Vacío a propósito: el cliente aún no confirma perfiles.
- * Añadir aquí la URL y se propaga a los datos estructurados sin más cambios.
+ * Perfiles oficiales para `sameAs` del JSON-LD. Vacío por decisión del
+ * cliente: STG no tiene redes sociales (2026-08-12). Si algún día abre una,
+ * basta añadir la URL aquí y entra sola a los datos estructurados.
  */
 export const SOCIAL_PROFILES: readonly string[] = [];
 
