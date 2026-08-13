@@ -1,15 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { SITE } from "@/lib/site";
 
 const NAV = [
-  { href: "#servicios", label: "Servicios" },
-  { href: "#nosotros", label: "Nosotros" },
-  { href: "#marcas", label: "Marcas" },
-  { href: "#clientes", label: "Clientes" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "/#servicios", label: "Servicios" },
+  { href: "/#nosotros", label: "Nosotros" },
+  { href: "/#marcas", label: "Marcas" },
+  { href: "/#clientes", label: "Clientes" },
+  { href: "/#contacto", label: "Contacto" },
 ];
 
 export default function Header() {
@@ -35,8 +36,8 @@ export default function Header() {
           aunque el logo y el bloque derecho pesen distinto */}
       <div className="wrap grid grid-cols-[1fr_auto_1fr] items-center gap-8">
         {/* Logo */}
-        <a
-          href="#inicio"
+        <Link
+          href="/"
           className="flex items-center gap-3 justify-self-start transition-opacity hover:opacity-80"
           aria-label={`${SITE.shortName} — inicio`}
           onClick={() => setOpen(false)}
@@ -49,18 +50,18 @@ export default function Header() {
             priority
             className="h-11 w-auto object-contain sm:h-12"
           />
-        </a>
+        </Link>
 
         {/* Centered Desktop Nav */}
         <nav className="hidden items-center justify-center gap-8 lg:flex" aria-label="Principal">
           {NAV.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               className="text-[0.95rem] font-medium text-silver-2 transition-colors hover:text-accent"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -73,12 +74,12 @@ export default function Header() {
             >
               {SITE.phoneDisplay}
             </a>
-            <a
-              href="#contacto"
+            <Link
+              href="/#contacto"
               className="rounded-full bg-accent px-6 py-2.5 text-[0.95rem] font-bold text-navy shadow-lg shadow-accent/20 transition-all hover:scale-105 hover:bg-accent-2"
             >
               Cotizar ahora
-            </a>
+            </Link>
           </div>
 
           <button
@@ -108,26 +109,26 @@ export default function Header() {
         <div className="min-h-0">
           <nav className="wrap flex flex-col py-6" aria-label="Principal móvil">
             {NAV.map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className="border-b border-white/5 py-4 text-center text-lg font-medium text-silver transition-colors hover:text-accent last:border-0"
                 onClick={() => setOpen(false)}
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
             <div className="mt-6 flex flex-col items-center gap-4">
               <a href={SITE.phoneHref} className="text-lg font-semibold text-silver">
                 {SITE.phoneDisplay}
               </a>
-              <a
-                href="#contacto"
+              <Link
+                href="/#contacto"
                 className="w-full rounded-full bg-accent py-3 text-center text-[1.05rem] font-bold text-navy shadow-lg shadow-accent/20 transition-colors hover:bg-accent-2"
                 onClick={() => setOpen(false)}
               >
                 Cotizar ahora
-              </a>
+              </Link>
             </div>
           </nav>
         </div>

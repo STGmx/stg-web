@@ -28,7 +28,8 @@ Dominio canónico: **`https://stgmx.mx`** (sin www). Vive en `SITE.url` (`src/li
 | Pieza | Archivo | Sale en |
 | --- | --- | --- |
 | Title, description, canonical, OG, Twitter, robots, iconos | `src/app/layout.tsx` | `<head>` de todas las páginas |
-| Datos estructurados (Organization + 5 Service + OfferCatalog + WebSite + WebPage) | `src/lib/schema.ts` | `<script type="application/ld+json">` |
+| Datos estructurados (LocalBusiness + 5 Service + OfferCatalog + WebSite + WebPage + BreadcrumbList) | `src/lib/schema.ts` | `<script type="application/ld+json">` |
+| Página por línea de servicio | `src/app/servicios/[slug]/page.tsx` | `/servicios/{slug}/` |
 | `robots.txt` | `src/app/robots.ts` | `/robots.txt` |
 | `sitemap.xml` | `src/app/sitemap.ts` | `/sitemap.xml` |
 | Manifest web | `src/app/manifest.ts` | `/manifest.webmanifest` |
@@ -48,12 +49,31 @@ Al cambiar contenido de la landing, actualizar `SITE.contentUpdated` — aliment
 4. Inspección de URLs → pegar `https://stgmx.mx/` → *Solicitar indexación*.
 5. Comprobar la ficha en [Rich Results Test](https://search.google.com/test/rich-results) y la vista previa social en el depurador de LinkedIn/WhatsApp.
 
-### Decisiones del cliente que acotan el SEO (2026-08-12)
+### Arquitectura de URLs
 
-- **Sin redes sociales.** `SOCIAL_PROFILES` queda vacío y el JSON-LD no emite `sameAs`.
-- **Sin datos de ubicación.** El JSON-LD no lleva nodo `address` ni `PostalAddress`; solo `areaServed` (dónde se presta el servicio). Por lo mismo no se persigue un Perfil de Empresa de Google, que exige publicar domicilio o zona de cobertura.
+La landing sola era **una URL compitiendo por cinco temas**. Cada línea de servicio tiene ahora su propia página estática, generada con `generateStaticParams` desde `SERVICES`:
 
-Consecuencia: la competencia se juega en búsqueda orgánica, no en el paquete local ni en el panel de mapas. Si algún día cambia el criterio, ambas piezas se reactivan añadiendo la URL en `SOCIAL_PROFILES` y el nodo `address` en `src/lib/schema.ts`.
+```
+/                                  home (las cinco líneas, anclas internas)
+/servicios/cocina-refrigeracion/
+/servicios/generadores/
+/servicios/trabajos-electricos/
+/servicios/sistemas-mecanicos/
+/servicios/personal-en-sitio/
+```
+
+Cada una lleva su `seoTitle` y `seoDescription` (campos de `src/lib/services.ts`), canonical propio, y un grafo JSON-LD con `Service` + `BreadcrumbList` reenlazado al **mismo `@id` de organización** que la home — así Google lee todo como una entidad, no como seis empresas.
+
+El diseño no cambió: reusan Header, Footer, LogoMark, Reveal y la misma paleta. Las anclas de Header y Footer pasaron a absolutas (`/#servicios`) para que funcionen desde cualquier ruta.
+
+**Lo que distingue cada página hoy es el bloque de marcas de su línea.** El resto del texto sale del brochure, que trae dos frases por servicio. Son páginas correctas en estructura pero **cortas de contenido**: hasta que el cliente aporte texto real por línea (qué incluye un preventivo, tiempos de respuesta, equipos que atienden), su capacidad de posicionar es limitada. Es el cuello de botella, y no es de código.
+
+### Decisiones del cliente (2026-08-12)
+
+- **Sin redes sociales.** No tienen. `SOCIAL_PROFILES` vacío → el JSON-LD no emite `sameAs`.
+- **Ubicación: solo coordenadas.** El cliente compartió un pin de Google Maps (`GEO.latitude` / `GEO.longitude` / `GEO.mapUrl`). Es un pin suelto, **no una ficha de Google Business Profile**: no trae nombre, domicilio, horario ni reseñas. El JSON-LD emite `geo` y `hasMap` con ese dato literal, más un `PostalAddress` sin calle ni CP.
+- **Pendiente para completar el `PostalAddress`:** calle, número y código postal confirmados. Geocodificar el pin a la inversa solo da la calle más cercana (Av. Paseo Kuzamil, CP 77539), que no es dato verificado — publicar una dirección equivocada en datos estructurados es peor que no publicar ninguna.
+- **Sigue sin haber Perfil de Empresa de Google**, que es cosa aparte del sitio y la mayor palanca para el paquete local. Admite modalidad "negocio de área de servicio", que oculta el domicilio y solo muestra la zona de cobertura.
 
 ## Sistema de diseño
 

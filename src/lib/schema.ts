@@ -39,7 +39,9 @@ const areaServed = [
 ];
 
 const organization = {
-  "@type": "Organization",
+  // LocalBusiness (subclase de Organization): con coordenadas confirmadas ya
+  // es una entidad con lugar, no solo una empresa con zona de cobertura.
+  "@type": "LocalBusiness",
   "@id": ORG_ID,
   name: SITE.name,
   alternateName: SITE.shortName,
@@ -58,9 +60,20 @@ const organization = {
   description: SITE.tagline,
   telephone: SITE.phoneE164,
   email: SITE.quoteEmail,
-  // Sin nodo `address`: el cliente decidió no publicar datos de ubicación
-  // (2026-08-12). Queda solo `areaServed`, que declara dónde se presta el
-  // servicio sin afirmar dónde está la empresa.
+  // Domicilio sin calle ni CP: ver la nota en GEO. Localidad, estado y país
+  // sí son datos firmes y ya aparecen en la página.
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: GEO.locality,
+    addressRegion: GEO.region,
+    addressCountry: GEO.countryCode,
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: GEO.latitude,
+    longitude: GEO.longitude,
+  },
+  hasMap: GEO.mapUrl,
   areaServed,
   knowsLanguage: ["es-MX"],
   // Marcas atendidas: refuerza la relevancia temática de la entidad.
@@ -176,6 +189,61 @@ export function buildGraph(title: string, description: string) {
       ...services,
       website,
       webPage,
+    ],
+  };
+}
+
+/**
+ * Grafo de una página de línea de servicio (/servicios/{slug}/).
+ *
+ * Reenlaza al mismo @id de la organización que la home, para que Google lea
+ * todas las páginas como una sola entidad y no como empresas distintas.
+ */
+export function buildServiceGraph(
+  slug: string,
+  title: string,
+  description: string,
+) {
+  const service = services.find((s) => s["@id"].endsWith(`#service-${slug}`));
+  const url = `${SITE.url}/servicios/${slug}/`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      organization,
+      website,
+      { ...service, "@id": `${url}#service`, url },
+      {
+        "@type": "WebPage",
+        "@id": `${url}#webpage`,
+        url,
+        name: title,
+        description,
+        isPartOf: { "@id": SITE_ID },
+        about: { "@id": `${url}#service` },
+        inLanguage: SITE.locale,
+        dateModified: SITE.contentUpdated,
+        breadcrumb: { "@id": `${url}#breadcrumb` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Inicio",
+            item: `${SITE.url}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Servicios",
+            item: `${SITE.url}/#servicios`,
+          },
+          { "@type": "ListItem", position: 3, name: title },
+        ],
+      },
     ],
   };
 }

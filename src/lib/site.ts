@@ -28,15 +28,26 @@ export const SITE = {
 } as const;
 
 /**
- * Zona donde STG presta servicio, desglosada para el `areaServed` de
- * schema.org. NO es un domicilio: el cliente decidió no publicar datos de
- * ubicación (2026-08-12), así que el JSON-LD no emite nodo `address`.
+ * Ubicación y zona de servicio para schema.org.
+ *
+ * Coordenadas: literales del pin que compartió el cliente (2026-08-12),
+ * https://maps.app.goo.gl/jwUwgW8V44qphxGC8 — un pin suelto, no una ficha de
+ * Google Business Profile.
+ *
+ * `street` y `postalCode` van vacíos a propósito: el pin no trae domicilio y
+ * geocodificarlo a la inversa solo da la calle más cercana (Av. Paseo
+ * Kuzamil, CP 77539), que no es un dato confirmado. Publicar una dirección
+ * equivocada en datos estructurados es peor que no publicar ninguna.
+ * TODO(cliente): calle, número y CP para completar el PostalAddress.
  */
 export const GEO = {
   locality: "Cancún",
   region: "Quintana Roo",
   country: "México",
   countryCode: "MX",
+  latitude: 21.128933,
+  longitude: -86.928741,
+  mapUrl: "https://maps.app.goo.gl/jwUwgW8V44qphxGC8",
 } as const;
 
 /**

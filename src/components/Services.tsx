@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { SERVICES, type ServiceSlug } from "@/lib/services";
 import { BRAND_GROUPS } from "@/lib/brands";
 import { waLink } from "@/lib/site";
@@ -146,14 +147,20 @@ export default function Services() {
 
                     <BrandRun slug={service.slug} />
 
-                    <div className="mt-10 pt-6 border-t border-line-2">
+                    <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-line-2 pt-6">
+                      <Link
+                        href={`/servicios/${service.slug}/`}
+                        className="link-quiet text-sm uppercase tracking-[0.15em]"
+                      >
+                        Ver esta línea
+                      </Link>
                       <a
                         href={waLink(service.waMessage)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="link-quiet text-sm uppercase tracking-[0.15em]"
                       >
-                        Cotizar esta línea
+                        Cotizar
                       </a>
                     </div>
                   </div>
@@ -227,7 +234,7 @@ export default function Services() {
                   </div>
                 )}
 
-                <div className="mt-12 pt-8 border-t border-line-2 lg:mt-auto lg:pt-10">
+                <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-line-2 pt-8 lg:mt-auto lg:pt-10">
                   <a
                     href={waLink(specialService.waMessage)}
                     target="_blank"
@@ -236,6 +243,12 @@ export default function Services() {
                   >
                     Cotizar Personal en Sitio
                   </a>
+                  <Link
+                    href={`/servicios/${specialService.slug}/`}
+                    className="link-quiet text-sm uppercase tracking-[0.15em]"
+                  >
+                    Ver esta línea
+                  </Link>
                 </div>
               </div>
             </article>

@@ -1,13 +1,14 @@
 import Image from "next/image";
+import Link from "next/link";
 import { CONTACTS, SITE, WA_DEFAULT } from "@/lib/site";
 import { IconWhatsApp } from "./icons";
 
 const NAV = [
-  { href: "#servicios", label: "Líneas de servicio" },
-  { href: "#nosotros", label: "Nosotros" },
-  { href: "#marcas", label: "Marcas" },
-  { href: "#clientes", label: "Clientes" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "/#servicios", label: "Líneas de servicio" },
+  { href: "/#nosotros", label: "Nosotros" },
+  { href: "/#marcas", label: "Marcas" },
+  { href: "/#clientes", label: "Clientes" },
+  { href: "/#contacto", label: "Contacto" },
 ];
 
 /**
@@ -38,9 +39,9 @@ export default function Footer() {
         </p>
 
         <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <a href="#contacto" className="btn-primary w-full sm:w-auto">
+          <Link href="/#contacto" className="btn-primary w-full sm:w-auto">
             Solicitar cotización
-          </a>
+          </Link>
           <a
             href={WA_DEFAULT}
             target="_blank"
@@ -61,12 +62,12 @@ export default function Footer() {
           <ul className="flex flex-col gap-2.5">
             {NAV.map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   href={item.href}
                   className="text-[0.925rem] text-silver-2 transition-colors hover:text-white"
                 >
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
